@@ -1,3 +1,7 @@
+CXXFLAGS = -O3 -march=native -mavx2 -msha -maes -mpclmul \
+           -funroll-loops -fomit-frame-pointer -flto -pipe
+LDFLAGS = -flto
+
 default:
 	g++ -m64 -march=native -mtune=native -mssse3 -Wall -Wextra -Wno-deprecated-copy -Ofast -ftree-vectorize -flto -c oldbloom/bloom.cpp -o oldbloom.o
 	g++ -m64 -march=native -mtune=native -mssse3 -Wall -Wextra -Wno-deprecated-copy -Ofast -ftree-vectorize -flto -c bloom/bloom.cpp -o bloom.o

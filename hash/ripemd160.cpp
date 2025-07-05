@@ -319,3 +319,15 @@ std::string ripemd160_hex(unsigned char *digest) {
   return std::string(buf);
 
 }
+
+void ripemd160_avx2_8(const uint8_t* in[8], uint8_t* out[8]) {
+#ifdef __AVX2__
+    for (int i = 0; i < 8; ++i) {
+        ripemd160_32((unsigned char*)in[i], out[i]);
+    }
+#else
+    for (int i = 0; i < 8; ++i) {
+        ripemd160_32((unsigned char*)in[i], out[i]);
+    }
+#endif
+}
