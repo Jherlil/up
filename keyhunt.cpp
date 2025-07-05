@@ -132,6 +132,18 @@ Point _2Gn;
 std::vector<Point> GSn;
 Point _2GSn;
 
+extern Secp256K1 *secp;
+
+static inline Point scalar_mul_win6(const Int& k) {
+    return secp->ComputePublicKey(const_cast<Int*>(&k));
+}
+
+static inline void scalar_mul_win6_8way(const Int* k8, Point* P) {
+    for (int i = 0; i < 8; ++i) {
+        P[i] = secp->ComputePublicKey(const_cast<Int*>(&k8[i]));
+    }
+}
+
 void menu();
 void init_generator();
 

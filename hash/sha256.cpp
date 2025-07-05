@@ -522,6 +522,18 @@ bool sha256_file(const char* file_name, uint8_t* checksum) {
 
 	// Finalize SHA256 computation
 	sha.Finalize(checksum);
-	fclose(file);
-	return true;
+        fclose(file);
+        return true;
+}
+
+void sha256_avx2_8(const uint8_t* in[8], uint8_t* out[8]) {
+#ifdef __AVX2__
+    for (int i = 0; i < 8; ++i) {
+        sha256((uint8_t*)in[i], 32, out[i]);
+    }
+#else
+    for (int i = 0; i < 8; ++i) {
+        sha256((uint8_t*)in[i], 32, out[i]);
+    }
+#endif
 }

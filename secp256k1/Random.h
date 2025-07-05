@@ -18,8 +18,20 @@
 #ifndef RANDOM_H
 #define RANDOM_H
 
+#include <stdint.h>
+#include <immintrin.h>
 double rnd();
 unsigned long rndl();
 void rseed(unsigned long seed);
+
+extern thread_local uint64_t xs_state[4];
+uint64_t xoshiro256pp();
+#ifdef __AVX2__
+struct Xoshiro8 {
+    __m256i s0,s1,s2,s3;
+    void seed(uint64_t base);
+    void next8(uint64_t out[8]);
+};
+#endif
 
 #endif
